@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayroll.service;
 
 
+import com.bridgelabz.employeepayroll.dto.EmployeeDto;
 import com.bridgelabz.employeepayroll.model.Employee;
 import com.bridgelabz.employeepayroll.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,29 +17,39 @@ public class EmpService {
     @Autowired
     private EmployeeRepo employeeRepo;
     //service to save employee to db
-    public Employee postEmployeeData(Employee emp){
-
+    public Employee postEmployeeData(EmployeeDto dto){
+        Employee emp = new Employee(dto.getName(), dto.getSalary(), dto.getDepartment());
         return employeeRepo.save(emp);
     }
     // service to get all employee
-    public List<Employee> getAllEmployee(){
+    public List<EmployeeDto> getAllEmployee(){
         List<Employee> allEmp = employeeRepo.findAll();
-        return allEmp;
+        List<EmployeeDto> allEmpDto = new ArrayList<>();
+        for(Employee emp : allEmp){
+            EmployeeDto empDto = new EmployeeDto(emp.getName(),emp.getSalary(),emp.getDepartment());
+            allEmpDto.add(empDto);
+        }
+        return allEmpDto;
 
     }
     // service to get employee by id
-    public Employee getEmployeeById(Integer id){
-        return employeeRepo.findById(id).orElse(null);
+    public EmployeeDto getEmployeeById(Integer id){
+        Employee emp = employeeRepo.findById(id).orElse(null);
+        if (emp == null) {
+            return null;
+        }
+        return new EmployeeDto(emp.getName(),emp.getSalary(),emp.getDepartment());
     }
 
     // service to update employee data
-    public Employee updateEmployee(Integer id,Employee updateEmp){
-        Employee emp = getEmployeeById(id);
+    public EmployeeDto updateEmployee(Integer id,EmployeeDto updateEmp){
+        Employee emp = employeeRepo.findById(id).orElse(null);
         if(emp!=null) {
             emp.setName(updateEmp.getName());
             emp.setDepartment(updateEmp.getDepartment());
             emp.setSalary(updateEmp.getSalary());
-            return employeeRepo.save(emp);
+            Employee updateEmployee = employeeRepo.save(emp);
+            return new EmployeeDto(updateEmployee.getName(), updateEmp.getSalary(), updateEmp.getDepartment());
         }
         else{
            return null;
@@ -46,8 +57,15 @@ public class EmpService {
     }
     // service to delete employee from db
   public String deleteEmp(Integer id){
-        employeeRepo.deleteById(id);
-        return "Employe with id : "+id+" deleted from DB";
+        Employee emp = employeeRepo.findById(id).orElse(null);
+        if(emp!=null){
+            employeeRepo.deleteById(id);
+            return "Employe with id : "+id+" deleted from DB";
+        }
+        else{
+            return "Employee not found";
+        }
+
   }
 
 }

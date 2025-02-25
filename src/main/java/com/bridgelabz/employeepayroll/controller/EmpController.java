@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayroll.controller;
 
 import com.bridgelabz.employeepayroll.EmployeePayRollApplication;
+import com.bridgelabz.employeepayroll.dto.EmployeeDto;
 import com.bridgelabz.employeepayroll.model.Employee;
 import com.bridgelabz.employeepayroll.service.EmpService;
 import org.slf4j.Logger;
@@ -20,27 +21,27 @@ public class EmpController {
 
     // Api to get all employee
     @GetMapping("/getall")
-    public List<Employee> getAllEmp(){
+    public List<EmployeeDto> getAllEmp(){
         logger.info("All employee List endpoint called ");
         return service.getAllEmployee();
     }
     // Api to create employee
     @PostMapping("/post")
-    public Employee postEmployee(@RequestBody Employee emp){
+    public Employee postEmployee(@RequestBody EmployeeDto emp){
 
         logger.info("member created endpoint called ");
         return service.postEmployeeData(emp);
     }
     // Api to get employee by their id
     @GetMapping("/getbyid/{id}")
-    public Employee getEmployeeById(@PathVariable Integer id){
+    public EmployeeDto getEmployeeById(@PathVariable Integer id){
         logger.info("get employee by their id endpoint called");
         return service.getEmployeeById(id);
     }
 
     // Api to update employee detail
     @PutMapping("/update/{id}")
-    public Employee updateEmployee(@PathVariable(required = true) Integer id,@RequestBody(required = true) Employee updateEmp){
+    public EmployeeDto updateEmployee(@PathVariable(required = true) Integer id,@RequestBody(required = true) EmployeeDto updateEmp){
         logger.info("update employee based on id endpoint called");
         return service.updateEmployee(id,updateEmp);
     }
