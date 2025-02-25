@@ -1,6 +1,7 @@
 package com.bridgelabz.employeepayroll.service;
 
 import com.bridgelabz.employeepayroll.dto.EmployeeDto;
+import com.bridgelabz.employeepayroll.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayroll.model.Employee;
 import com.bridgelabz.employeepayroll.repository.EmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,14 +44,11 @@ public class EmpService {
 
     // Service to get employee by ID
     public ResponseEntity<EmployeeDto> getEmployeeById(Integer id) {
-        Optional<Employee> emp = employeeRepo.findById(id);
+        Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));;
 
-        if (emp.isPresent()) {
-            Employee employee = emp.get();
-            EmployeeDto empDto = new EmployeeDto(employee.getName(), employee.getSalary(), employee.getDepartment());
-            return new ResponseEntity<>(empDto, HttpStatus.OK);
-        }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+
+        EmployeeDto empDto = new EmployeeDto(emp.getName(), emp.getSalary(), emp.getDepartment());
+        return new ResponseEntity<>(empDto, HttpStatus.OK);
     }
 
     // Service to update employee data
@@ -73,12 +71,11 @@ public class EmpService {
 
     // Service to delete employee from DB
     public ResponseEntity<String> deleteEmp(Integer id) {
-        Optional<Employee> emp = employeeRepo.findById(id);
+        Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
 
-        if (emp.isPresent()) {
             employeeRepo.deleteById(id);
             return new ResponseEntity<>("Employee with ID: " + id + " deleted from DB", HttpStatus.OK);
-        }
-        return new ResponseEntity<>("Employee not found", HttpStatus.NOT_FOUND);
+
+
     }
 }
