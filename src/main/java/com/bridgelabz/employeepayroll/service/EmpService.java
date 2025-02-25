@@ -18,7 +18,7 @@ public class EmpService {
     private EmployeeRepo employeeRepo;
     //service to save employee to db
     public Employee postEmployeeData(EmployeeDto dto){
-        Employee emp = new Employee(dto.getName(), dto.getSalary(), dto.getDepartment());
+        Employee emp = new Employee(0,dto.getName(), dto.getSalary(), dto.getDepartment());
         return employeeRepo.save(emp);
     }
     // service to get all employee
