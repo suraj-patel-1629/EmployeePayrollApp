@@ -1,13 +1,14 @@
 package com.bridgelabz.employeepayroll.controller;
 
-import com.bridgelabz.employeepayroll.EmployeePayRollApplication;
 import com.bridgelabz.employeepayroll.dto.EmployeeDto;
 import com.bridgelabz.employeepayroll.model.Employee;
 import com.bridgelabz.employeepayroll.service.EmpService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,42 +17,44 @@ import java.util.List;
 @RequestMapping("/emp")
 @Slf4j
 public class EmpController {
+
     private static final Logger logger = LoggerFactory.getLogger(EmpController.class);
-    // injecting EmpService class
+
     @Autowired
     private EmpService service;
 
-    // Api to get all employee
+    // API to get all employees
     @GetMapping("/getall")
-    public List<EmployeeDto> getAllEmp(){
-        log.info("All employee List endpoint called ");
+    public ResponseEntity<List<EmployeeDto>> getAllEmp() {
+        log.info("Fetching all employees");
         return service.getAllEmployee();
     }
-    // Api to create employee
-    @PostMapping("/post")
-    public Employee postEmployee(@RequestBody EmployeeDto emp){
 
-        log.info("member created endpoint called ");
+    // API to create employee
+    @PostMapping("/post")
+    public ResponseEntity<Employee> postEmployee(@Valid @RequestBody EmployeeDto emp) {
+        log.info("Creating new employee");
         return service.postEmployeeData(emp);
     }
-    // Api to get employee by their id
+
+    // API to get employee by their ID
     @GetMapping("/getbyid/{id}")
-    public EmployeeDto getEmployeeById(@PathVariable Integer id){
-        log.info("fetching detail of employee no : "+id);
+    public ResponseEntity<EmployeeDto> getEmployeeById(@PathVariable Integer id) {
+        log.info("Fetching details of employee with ID: " + id);
         return service.getEmployeeById(id);
     }
 
-    // Api to update employee detail
+    // API to update employee details
     @PutMapping("/update/{id}")
-    public EmployeeDto updateEmployee(@PathVariable(required = true) Integer id,@RequestBody(required = true) EmployeeDto updateEmp){
-        log.info("Employee with id "+id+" updated");
-        return service.updateEmployee(id,updateEmp);
-    }
-    // Api to delete employee from db
-    @DeleteMapping("/delete/{id}")
-    public String deleteEmp(@PathVariable Integer id){
-        log.info("Employee with ID no "+id+ " deleted");
-        return service.deleteEmp(id);
+    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Integer id, @Valid @RequestBody EmployeeDto updateEmp) {
+        log.info("Updating employee with ID: " + id);
+        return service.updateEmployee(id, updateEmp);
     }
 
+    // API to delete employee from DB
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmp(@PathVariable Integer id) {
+        log.info("Deleting employee with ID: " + id);
+        return service.deleteEmp(id);
+    }
 }
