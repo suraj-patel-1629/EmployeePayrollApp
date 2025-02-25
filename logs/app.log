@@ -347,4 +347,3 @@ Identify and stop the process that's listening on port 8080 or configure this ap
 2025-02-25T11:53:07.989+05:30  INFO 27808 --- [EmployeePayRoll] [http-nio-8080-exec-3] c.b.e.controller.EmpController           : member created endpoint called 
 2025-02-25T11:53:11.392+05:30  INFO 27808 --- [EmployeePayRoll] [http-nio-8080-exec-4] c.b.e.controller.EmpController           : All employee List endpoint called 
 2025-02-25T11:53:42.967+05:30  INFO 27808 --- [EmployeePayRoll] [http-nio-8080-exec-5] c.b.e.controller.EmpController           : Employee with ID no 1 deleted
-2025-02-25T12:01:31.927+05:30  INFO 27808 --- [EmployeePayRoll] [http-nio-8080-exec-8] c.b.e.controller.EmpController           : Employee with ID no 1 deleted

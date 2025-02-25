@@ -71,7 +71,7 @@ public class EmpService {
 
     // Service to delete employee from DB
     public ResponseEntity<String> deleteEmp(Integer id) {
-        Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));
+        Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found please provide correct ID"));
 
             employeeRepo.deleteById(id);
             return new ResponseEntity<>("Employee with ID: " + id + " deleted from DB", HttpStatus.OK);
