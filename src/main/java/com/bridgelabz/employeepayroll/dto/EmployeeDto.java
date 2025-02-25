@@ -1,12 +1,16 @@
 package com.bridgelabz.employeepayroll.dto;
 
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class EmployeeDto {
+ @NotBlank(message = "Name is required and cannot be empty")
+ @Pattern(regexp = "^[A-Z][a-zA-Z\\s]{2,}$", message = "Name must start with a capital letter and contain only alphabets")
  private String name;
  private double salary;
  private String department;
