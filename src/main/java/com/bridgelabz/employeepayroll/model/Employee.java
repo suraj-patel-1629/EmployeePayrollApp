@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
 
+import java.time.LocalDate;
+
 
 @Entity
 @Data
@@ -19,6 +21,10 @@ public class Employee {
     private String name;
     private double salary;
     private String department;
+    private LocalDate startDate;
+    private String gender;
+    private String profilePic;
+    private String note;
 
 //    Employee(){
 //
