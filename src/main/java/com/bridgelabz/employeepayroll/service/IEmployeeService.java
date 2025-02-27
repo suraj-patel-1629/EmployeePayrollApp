@@ -12,5 +12,6 @@ public interface IEmployeeService {
     ResponseEntity<EmployeeDto> getEmployeeById(Integer id);
     ResponseEntity<EmployeeDto> updateEmployee(Integer id, EmployeeDto updateEmp);
     ResponseEntity<String> deleteEmp(Integer id);
+    List<Employee> findEmployeeByDepartment(String department);
 
 }

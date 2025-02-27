@@ -85,4 +85,8 @@ public class EmpService implements IEmployeeService {
 
 
     }
+    public List<Employee> findEmployeeByDepartment(String department){
+       List<Employee> emp = employeeRepo.findEmployeeByDepartment(department);
+       return emp;
+    }
 }
