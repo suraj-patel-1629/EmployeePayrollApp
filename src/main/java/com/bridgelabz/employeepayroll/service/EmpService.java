@@ -4,6 +4,7 @@ import com.bridgelabz.employeepayroll.dto.EmployeeDto;
 import com.bridgelabz.employeepayroll.exception.EmployeeNotFoundException;
 import com.bridgelabz.employeepayroll.model.Employee;
 import com.bridgelabz.employeepayroll.repository.EmployeeRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class EmpService {
     // Injecting EmployeeRepo class
     @Autowired
@@ -21,6 +23,7 @@ public class EmpService {
 
     // Service to save employee to DB
     public ResponseEntity<Employee> postEmployeeData(EmployeeDto dto) {
+        log.info("Saving employee : {}",dto);
         Employee emp = new Employee(0, dto.getName(), dto.getSalary(), dto.getDepartment(),dto.getStartDate(), dto.getGender(), dto.getProfilePic(), dto.getNote());
         Employee savedEmployee = employeeRepo.save(emp);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED); // 201 Created
@@ -28,6 +31,7 @@ public class EmpService {
 
     // Service to get all employees
     public ResponseEntity<List<EmployeeDto>> getAllEmployee() {
+        log.info("Getting All Employees");
         List<Employee> allEmp = employeeRepo.findAll();
         List<EmployeeDto> allEmpDto = new ArrayList<>();
 
@@ -44,6 +48,7 @@ public class EmpService {
 
     // Service to get employee by ID
     public ResponseEntity<EmployeeDto> getEmployeeById(Integer id) {
+        log.info("Getting the details od Employeee with id : {}",id);
         Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));;
 
 
@@ -53,6 +58,7 @@ public class EmpService {
 
     // Service to update employee data
     public ResponseEntity<EmployeeDto> updateEmployee(Integer id, EmployeeDto updateEmp) {
+        log.info("Updating employee with id : {}",id);
         Optional<Employee> emp = employeeRepo.findById(id);
 
         if (emp.isPresent()) {
@@ -71,6 +77,7 @@ public class EmpService {
 
     // Service to delete employee from DB
     public ResponseEntity<String> deleteEmp(Integer id) {
+        log.info("Deleting the Employee with id : {}",id);
         Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found please provide correct ID"));
 
             employeeRepo.deleteById(id);

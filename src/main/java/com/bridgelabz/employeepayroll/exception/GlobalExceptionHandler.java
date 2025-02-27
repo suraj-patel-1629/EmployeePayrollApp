@@ -2,8 +2,10 @@ package com.bridgelabz.employeepayroll.exception;
 
 
 
+import com.bridgelabz.employeepayroll.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -37,6 +39,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleGlobalException(Exception ex) {
         return new ResponseEntity<>("Something went wrong! " + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    private  static final String message ="Exception While Processing Rest Request";
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ResponseDto> handleJsonParsingError(HttpMessageNotReadableException ex){
+        ResponseDto responseDto = new ResponseDto(message,"Provide correct format of date");
+        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
+    }
+
 
 }
 
