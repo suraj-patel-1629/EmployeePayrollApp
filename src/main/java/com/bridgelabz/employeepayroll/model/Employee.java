@@ -1,13 +1,11 @@
 package com.bridgelabz.employeepayroll.model;
 
 import jakarta.annotation.sql.DataSourceDefinitions;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Entity
@@ -20,11 +18,12 @@ public class Employee {
     private int id;
     private String name;
     private double salary;
-    private String department;
+    private List<String> department;
     private LocalDate startDate;
     private String gender;
     private String profilePic;
     private String note;
+
 
 //    Employee(){
 //
