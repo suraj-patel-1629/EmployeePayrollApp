@@ -21,7 +21,7 @@ public class EmpService {
 
     // Service to save employee to DB
     public ResponseEntity<Employee> postEmployeeData(EmployeeDto dto) {
-        Employee emp = new Employee(0, dto.getName(), dto.getSalary(), dto.getDepartment());
+        Employee emp = new Employee(0, dto.getName(), dto.getSalary(), dto.getDepartment(),dto.getStartDate(), dto.getGender(), dto.getProfilePic(), dto.getNote());
         Employee savedEmployee = employeeRepo.save(emp);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED); // 201 Created
     }
@@ -32,7 +32,7 @@ public class EmpService {
         List<EmployeeDto> allEmpDto = new ArrayList<>();
 
         for (Employee emp : allEmp) {
-            EmployeeDto empDto = new EmployeeDto(emp.getName(), emp.getSalary(), emp.getDepartment());
+            EmployeeDto empDto = new EmployeeDto(emp.getName(), emp.getSalary(), emp.getDepartment(),emp.getProfilePic(),emp.getGender(),emp.getStartDate(),emp.getNote());
             allEmpDto.add(empDto);
         }
 
@@ -47,7 +47,7 @@ public class EmpService {
         Employee emp = employeeRepo.findById(id).orElseThrow(() -> new EmployeeNotFoundException("Employee with ID " + id + " not found"));;
 
 
-        EmployeeDto empDto = new EmployeeDto(emp.getName(), emp.getSalary(), emp.getDepartment());
+        EmployeeDto empDto = new EmployeeDto(emp.getName(), emp.getSalary(), emp.getDepartment(),emp.getProfilePic(),emp.getGender(),emp.getStartDate(),emp.getNote());
         return new ResponseEntity<>(empDto, HttpStatus.OK);
     }
 
@@ -62,7 +62,7 @@ public class EmpService {
             existingEmployee.setSalary(updateEmp.getSalary());
 
             Employee updatedEmployee = employeeRepo.save(existingEmployee);
-            EmployeeDto responseDto = new EmployeeDto(updatedEmployee.getName(), updatedEmployee.getSalary(), updatedEmployee.getDepartment());
+            EmployeeDto responseDto = new EmployeeDto(updatedEmployee.getName(), updatedEmployee.getSalary(), updatedEmployee.getDepartment(),updatedEmployee.getProfilePic(),updatedEmployee.getGender(),updatedEmployee.getStartDate(),updatedEmployee.getNote());
 
             return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
