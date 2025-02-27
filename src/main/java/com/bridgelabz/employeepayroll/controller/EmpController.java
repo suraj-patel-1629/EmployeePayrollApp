@@ -58,4 +58,11 @@ public class EmpController {
         log.info("Deleting employee with ID: " + id);
         return iEmployeeService.deleteEmp(id);
     }
+
+    @GetMapping("/department/{department}")
+    public List<Employee> findEmployeeByDepartment(@PathVariable String department){
+        List<Employee> empDataList = null;
+        empDataList= iEmployeeService.findEmployeeByDepartment(department);
+        return empDataList;
+    }
 }
