@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @Service
 @Slf4j
-public class EmpService {
+public class EmpService implements IEmployeeService {
     // Injecting EmployeeRepo class
     @Autowired
     private EmployeeRepo employeeRepo;
