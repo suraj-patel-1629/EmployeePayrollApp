@@ -18,6 +18,9 @@ public class Employee {
     private int id;
     private String name;
     private double salary;
+    @ElementCollection
+    @CollectionTable(name = "employee_departments", joinColumns = @JoinColumn(name = "id"))
+    @Column(name = "department")
     private List<String> department;
     private LocalDate startDate;
     private String gender;
